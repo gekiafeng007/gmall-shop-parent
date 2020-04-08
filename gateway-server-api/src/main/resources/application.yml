@@ -1,0 +1,28 @@
+server:
+  port: 8080 #端口
+spring:
+  application:
+    name: gateway-server-api #服务名称
+
+  cloud: #配置SpringCloudGateway的路由
+    nacos:
+      discovery:
+        server-addr: 192.168.162.145:8848
+
+    gateway:
+      routes:
+      - id: gmall-oms-service
+        uri: lb://gmall-oms-service  #lb:// 根据微服务名称从注册中心中拉取服务请求路径
+        predicates:
+        - Path=/oms/**  #将服务转发到 http://localhost:8080/product/1
+        filters: #配置路由过滤器 将 http://localhost:8080/product-service/product/1 ,转换成http://localhost:8080/product/1
+          - RewritePath=/oms/(?<segment>.*), /$\{segment}
+
+      - id: gmall-pms-service
+        uri: lb://gmall-pms-service  #lb:// 根据微服务名称从注册中心中拉取服务请求路径
+        predicates:
+        - Path=/pms/**  #将服务转发到 http://localhost:8080/product/1
+        filters: #配置路由过滤器 将 http://localhost:8080/product-service/product/1 ,转换成http://localhost:8080/product/1
+          - RewritePath=/pms/(?<segment>.*), /$\{segment}
+
+

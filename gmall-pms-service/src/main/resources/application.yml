@@ -1,0 +1,29 @@
+server:
+  port: 8070
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver    #com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.162.145:3306/guli_pms?useUnicode=true&useSSL=false&characterEncoding=utf8
+    username: root
+    password: Test2016@
+  application:
+    name: gmall-pms-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.162.145:8848
+  #redis:
+    #host: 192.168.162.142
+    #port: 6379
+    #database: 0
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #打印sql文件
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+
